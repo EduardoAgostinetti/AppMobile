@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { Op } = require('sequelize');
@@ -68,17 +70,36 @@ router.post('/forgot', async (req, res) => {
       return res.status(400).json({ message: 'Email não encontrado' });
     }
 
-    // Gerar código de verificação
+    // Gerar código de verificação de 6 dígitos
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
+    // Salvar código no banco
     user.verificationCode = verificationCode;
     await user.save();
 
-    // Enviar o código por email (simulação)
-    // Aqui você pode integrar com um serviço de envio de emails
+    // Configurar transporte de email com Gmail (pode ser outro serviço)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS // Use senha de app, não sua senha normal!
+      }
+    });
+
+    // Conteúdo do e-mail
+    const mailOptions = {
+      from: '"Gym Track" <duducom195@gmail.com>',
+      to: email,
+      subject: 'Código de Verificação - Recuperação de Senha',
+      text: `Seu código de verificação é: ${verificationCode}`
+    };
+
+    // Enviar email
+    await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: 'Código de verificação enviado para seu email' });
   } catch (error) {
+    console.error('Erro ao enviar email:', error);
     res.status(500).json({ message: 'Erro ao recuperar senha', error });
   }
 });
