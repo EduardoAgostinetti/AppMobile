@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       final token = data['token'];
       showSuccessMessage('Login realizado com sucesso!');
-      // Ex: Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
       showErrorMessage(data['message'] ?? 'Erro ao fazer login');
     }

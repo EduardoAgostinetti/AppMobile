@@ -4,6 +4,9 @@ import 'register_page.dart';
 import 'forgot_password_page.dart';
 import 'code_verification_page.dart';
 import 'reset_password_page.dart';
+import 'home_page.dart';
+import 'history_page.dart';
+import 'new_ficha_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +40,8 @@ class MyApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Color(0xFF0288D1)),
@@ -57,6 +61,9 @@ class MyApp extends StatelessWidget {
         '/forgot': (_) => const ForgotPasswordPage(),
         '/code': (_) => const CodeVerificationPage(),
         '/reset': (_) => const ResetPasswordPage(),
+        '/home': (_) => const HomePage(),
+        '/history': (_) => const HistoryPage(),
+        '/newficha': (_) => const NewFichaPage(),
       },
     );
   }
