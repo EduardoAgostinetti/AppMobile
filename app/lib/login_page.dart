@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-    final localhostIP = "10.21.4.245";
+    final localhostIP = "192.168.40.181";
 
     if (email.isEmpty || password.isEmpty) {
       showErrorMessage('Preencha todos os campos');
@@ -38,8 +38,13 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.statusCode == 200) {
       final token = data['token'];
+      print(data);
       showSuccessMessage('Login realizado com sucesso!');
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushNamed(
+        context,
+        '/home',
+        arguments: {'userId': data['userId']},
+      );
     } else {
       showErrorMessage(data['message'] ?? 'Erro ao fazer login');
     }

@@ -25,7 +25,7 @@ class _CodeVerificationPageState extends State<CodeVerificationPage> {
 
   Future<void> verifyCode() async {
     final code = codeController.text.trim();
-    final localhostIP = "10.21.4.245";
+    final localhostIP = "192.168.40.181";
 
     if (code.isEmpty) {
       showError("Digite o código de verificação.");

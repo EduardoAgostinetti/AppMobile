@@ -27,7 +27,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Future<void> resetPassword() async {
     final newPassword = newPasswordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
-    final localhostIP = "10.21.4.245";
+    final localhostIP = "192.168.40.181";
 
     if (newPassword.isEmpty || confirmPassword.isEmpty) {
       showError("Preencha todos os campos.");

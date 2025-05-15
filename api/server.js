@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/database');
 const authRoutes = require('./routes/auth');
+const workoutRoutes = require('./routes/workout');
 
 const app = express();
 
@@ -12,9 +13,10 @@ app.use(bodyParser.json());
 
 // Rotas
 app.use('/auth', authRoutes);
+app.use('/workout', workoutRoutes);
 
 // Inicializa o banco de dados e o servidor
-sequelize.sync()
+sequelize.sync({ force: true })
   .then(() => {
     console.log('Banco de dados sincronizado');
     app.listen(3000, () => {

@@ -22,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final email = emailController.text.trim();
     final password = passwordController.text;
     final confirmPassword = confirmController.text;
-    final localhostIP = "10.21.4.245";
+    final localhostIP = "192.168.40.181";
 
     // Verificação de campos vazios
     if (name.isEmpty ||

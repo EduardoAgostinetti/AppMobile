@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.status(200).json({ message: 'Login bem-sucedido', token });
+    res.status(200).json({ message: 'Login bem-sucedido' + user.id, token, userId: user.id });
   } catch (error) {
     res.status(500).json({ message: 'Erro ao fazer login', error });
   }

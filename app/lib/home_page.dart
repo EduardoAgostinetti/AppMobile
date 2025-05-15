@@ -11,16 +11,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  late int userId;
 
-  final List<Widget> _pages = [
-    const HistoryPage(),
-    const NewFichaPage(),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    userId = args['userId'];
+  }
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      HistoryPage(userId: userId),
+      NewFichaPage(userId: userId),
+    ];
+
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.teal,

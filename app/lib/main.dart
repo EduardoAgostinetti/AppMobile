@@ -62,8 +62,30 @@ class MyApp extends StatelessWidget {
         '/code': (_) => const CodeVerificationPage(),
         '/reset': (_) => const ResetPasswordPage(),
         '/home': (_) => const HomePage(),
-        '/history': (_) => const HistoryPage(),
-        '/newficha': (_) => const NewFichaPage(),
+        // ❌ Remover essas rotas porque exigem argumentos obrigatórios
+        // '/history': (_) => const HistoryPage(),
+        // '/newficha': (_) => const NewFichaPage(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/history') {
+          final args = settings.arguments as Map<String, dynamic>;
+          final int userId = args['userId'];
+
+          return MaterialPageRoute(
+            builder: (_) => HistoryPage(userId: userId),
+          );
+        }
+
+        if (settings.name == '/newficha') {
+          final args = settings.arguments as Map<String, dynamic>;
+          final int userId = args['userId'];
+
+          return MaterialPageRoute(
+            builder: (_) => NewFichaPage(userId: userId),
+          );
+        }
+
+        return null; // rota não encontrada
       },
     );
   }
