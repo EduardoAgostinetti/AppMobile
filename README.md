@@ -14,11 +14,16 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
   - Verificação do código enviado por email
   - Redefinição de senha com novo acesso
 - Validação e mensagens de erro elegantes
+- Atualização de dados do usuário:
+  - Alterar nome
+  - Alterar email (com validação)
+  - Alterar senha
 
 ### 📋 Gestão de Fichas de Treino
-- Criar nova ficha de treino
-- Editar, visualizar e excluir fichas
-- Atribuir exercícios por grupo muscular
+- Criar nova ficha de treino (exercícios com grupo muscular, nome e séries)
+- Listar todas as fichas de treino de um usuário
+- Editar ficha de treino por ID
+- Excluir ficha de treino por ID
 - Histórico de treinos anteriores
 
 ---
@@ -43,6 +48,7 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
 - Verificação de Código
 - Redefinir Senha
 - Gestão de Treinos (CRUD)
+- Perfil do Usuário (edição de nome, email e senha)
 
 ---
 
@@ -63,7 +69,9 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
    npm install
    ```
 3. Criar o banco de dados no PostgreSQL
-4. Configurar o arquivo `.env` com os dados do banco
+4. Configurar o arquivo `.env` com os dados do banco e variáveis sensíveis, incluindo:
+   - `EMAIL_USER` e `EMAIL_PASS` para envio de email
+   - `JWT_SECRET` para geração dos tokens
 5. Rodar as migrações e iniciar o servidor:
    ```bash
    npx sequelize db:migrate
@@ -84,19 +92,31 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
 
 - `POST /api/auth/register` – Cria novo usuário
 - `POST /api/auth/login` – Realiza login e retorna token
-- `POST /api/auth/forgot-password` – Envia código para o email
+- `POST /api/auth/forgot` – Envia código para o email para recuperação de senha
 - `POST /api/auth/verify-code` – Verifica o código enviado
-- `POST /api/auth/reset-password` – Redefine a senha
+- `POST /api/auth/reset` – Redefine a senha
+- `GET /api/auth/user/:id` – Obter dados do usuário (sem senha)
+- `PUT /api/auth/user/:id/name` – Atualiza nome do usuário
+- `PUT /api/auth/user/:id/email` – Atualiza email do usuário (verifica duplicidade)
+- `PUT /api/auth/user/:id/password` – Atualiza senha do usuário
+
+---
+
+## 🧩 Estrutura das Rotas de Fichas de Treino (Backend)
+
+/workout
+
+- `POST /workout/` – Criar nova ficha de treino
+- `GET /workout/user/:userId` – Listar todas as fichas de treino de um usuário
+- `PUT /workout/:id` – Atualizar ficha de treino por ID
+- `DELETE /workout/:id` – Deletar ficha de treino por ID
 
 ---
 
 ## ✨ Estilo Visual
 
 - Telas estilizadas com tons de **azul** e **verde**
-- Interface intuitiva, com links para navegação fácil entre as telas de autenticação
+- Interface intuitiva, com links para navegação fácil entre as telas de autenticação e gestão de treino
 
 ---
 
-## 📧 Contato
-
-Para dúvidas ou sugestões, entre em contato com a equipe GymTrack.
