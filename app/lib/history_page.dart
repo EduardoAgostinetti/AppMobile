@@ -14,7 +14,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   List<dynamic> fichas = [];
   bool isLoading = false;
-  final localhostIP = "192.168.49.23";
+  final localhostIP = "18.117.165.83";
 
   @override
   void initState() {
