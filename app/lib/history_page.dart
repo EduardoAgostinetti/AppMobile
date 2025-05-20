@@ -14,7 +14,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   List<dynamic> fichas = [];
   bool isLoading = false;
-  final localhostIP = "192.168.40.181";
+  final localhostIP = "192.168.49.23";
 
   @override
   void initState() {
@@ -88,11 +88,105 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  void _editFicha(Map<String, dynamic> ficha) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text('Editar ficha ${ficha['id']} ainda não implementado')),
+  void _editFicha(Map<String, dynamic> ficha) async {
+    final groupController = TextEditingController(text: ficha['group']);
+    final exerciseController =
+        TextEditingController(text: ficha['exerciseName']);
+
+    final seriesList = List<Map<String, dynamic>>.from(ficha['series']);
+
+    final edited = await showDialog<bool>(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text('Editar Ficha'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  controller: groupController,
+                  decoration:
+                      const InputDecoration(labelText: 'Grupo Muscular'),
+                ),
+                TextField(
+                  controller: exerciseController,
+                  decoration: const InputDecoration(labelText: 'Exercício'),
+                ),
+                const SizedBox(height: 10),
+                const Text('Séries:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                ...seriesList.asMap().entries.map((entry) {
+                  int i = entry.key;
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          initialValue: entry.value['weight'].toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(labelText: 'Peso'),
+                          onChanged: (val) =>
+                              seriesList[i]['weight'] = int.tryParse(val) ?? 0,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          initialValue: entry.value['reps'].toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(labelText: 'Reps'),
+                          onChanged: (val) =>
+                              seriesList[i]['reps'] = int.tryParse(val) ?? 0,
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancelar')),
+            TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Salvar')),
+          ],
+        );
+      },
     );
+
+    if (edited != true) return;
+
+    final updatedFicha = {
+      'group': groupController.text.trim(),
+      'exerciseName': exerciseController.text.trim(),
+      'series': seriesList
+    };
+
+    try {
+      final response = await http.put(
+        Uri.parse('http://$localhostIP:3000/workout/${ficha['id']}'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(updatedFicha),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Ficha atualizada com sucesso')),
+        );
+        _fetchFichas();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Erro ao atualizar ficha: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro de conexão: $e')),
+      );
+    }
   }
 
   @override

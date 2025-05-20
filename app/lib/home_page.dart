@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'history_page.dart';
 import 'new_ficha_page.dart';
+import 'profile_page.dart'; // ✅ Importa a nova página de perfil
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     final List<Widget> pages = [
       HistoryPage(userId: userId),
       NewFichaPage(userId: userId),
+      ProfilePage(userId: userId), // ✅ Nova página adicionada
     ];
 
     return Scaffold(
@@ -43,6 +45,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle),
             label: 'Nova Ficha',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person), // ✅ Ícone de perfil
+            label: 'Perfil',
           ),
         ],
       ),

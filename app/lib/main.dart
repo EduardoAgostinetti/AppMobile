@@ -7,6 +7,7 @@ import 'reset_password_page.dart';
 import 'home_page.dart';
 import 'history_page.dart';
 import 'new_ficha_page.dart';
+import 'profile_page.dart';
 
 void main() {
   runApp(const MyApp());

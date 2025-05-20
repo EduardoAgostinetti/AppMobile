@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-    final localhostIP = "192.168.40.181";
+    final localhostIP = "192.168.49.23";
 
     if (email.isEmpty || password.isEmpty) {
       showErrorMessage('Preencha todos os campos');

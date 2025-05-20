@@ -60,6 +60,77 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Rota para obter informações do usuário pelo ID (sem a senha)
+router.get('/user/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOne({
+      where: { id },
+      attributes: { exclude: ['password'] }, // Exclui a senha
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar usuário', error });
+  }
+});
+
+// Atualizar nome
+router.put('/user/:id/name', async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+
+    await user.update({ name });
+    res.status(200).json({ message: 'Nome atualizado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar nome', error });
+  }
+});
+
+// Atualizar email
+router.put('/user/:id/email', async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+
+    await user.update({ email });
+    res.status(200).json({ message: 'Email atualizado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar email', error });
+  }
+});
+
+// Atualizar senha
+router.put('/user/:id/password', async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await user.update({ password: hashedPassword });
+
+    res.status(200).json({ message: 'Senha atualizada com sucesso' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar senha', error });
+  }
+});
+
+
 // Rota para recuperação de senha (envio de código)
 router.post('/forgot', async (req, res) => {
   const { email } = req.body;
