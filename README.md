@@ -60,6 +60,8 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
 - Emulador Android ou dispositivo físico
 - Node.js + PostgreSQL instalados para o backend
 
+---
+
 ## 🧩 Estrutura das Rotas de Autenticação (Backend)
 
 - `POST /api/auth/register` – Cria novo usuário
