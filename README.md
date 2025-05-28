@@ -47,12 +47,11 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
 - Recuperar Senha
 - Verificação de Código
 - Redefinir Senha
-- Gestão de Treinos (CRUD)
+- Gestão de Fichas
+- Criação de Fichas
 - Perfil do Usuário (edição de nome, email e senha)
 
 ---
-
-## 📦 Como Rodar o Projeto
 
 ### Pré-requisitos
 
@@ -60,33 +59,6 @@ Aplicativo Flutter para gerenciamento de usuários e fichas de treino de academi
 - Android Studio ou VS Code
 - Emulador Android ou dispositivo físico
 - Node.js + PostgreSQL instalados para o backend
-
-### Backend
-
-1. Clonar o projeto e navegar até a pasta `backend/`
-2. Instalar dependências:
-   ```bash
-   npm install
-   ```
-3. Criar o banco de dados no PostgreSQL
-4. Configurar o arquivo `.env` com os dados do banco e variáveis sensíveis, incluindo:
-   - `EMAIL_USER` e `EMAIL_PASS` para envio de email
-   - `JWT_SECRET` para geração dos tokens
-5. Rodar as migrações e iniciar o servidor:
-   ```bash
-   npx sequelize db:migrate
-   node app.js
-   ```
-
-### Flutter
-
-1. Navegar até a pasta do app Flutter
-2. Rodar no emulador ou dispositivo:
-   ```bash
-   flutter run -d emulator-5554
-   ```
-
----
 
 ## 🧩 Estrutura das Rotas de Autenticação (Backend)
 
