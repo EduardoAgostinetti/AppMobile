@@ -161,51 +161,55 @@ class _NewFichaPageState extends State<NewFichaPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: seriesControllers.length,
                 itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: seriesControllers[index]['weight'],
-                          keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
-                          decoration: InputDecoration(
-                              labelText: 'Peso (kg) - Série ${index + 1}'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Informe o peso';
-                            }
-                            if (double.tryParse(value) == null) {
-                              return 'Peso inválido';
-                            }
-                            return null;
-                          },
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 12), // Espaço de 12 pixels abaixo de cada série
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: seriesControllers[index]['weight'],
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            decoration: InputDecoration(
+                                labelText: 'Peso (kg) - Série ${index + 1}'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Informe o peso';
+                              }
+                              if (double.tryParse(value) == null) {
+                                return 'Peso inválido';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: seriesControllers[index]['reps'],
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText: 'Repetições - Série ${index + 1}'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Informe as repetições';
-                            }
-                            if (int.tryParse(value) == null) {
-                              return 'Repetições inválidas';
-                            }
-                            return null;
-                          },
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextFormField(
+                            controller: seriesControllers[index]['reps'],
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: 'Repetições - Série ${index + 1}'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Informe as repetições';
+                              }
+                              if (int.tryParse(value) == null) {
+                                return 'Repetições inválidas';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: seriesControllers.length > 1
-                            ? () => _removeSeries(index)
-                            : null,
-                      ),
-                    ],
+                        IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: seriesControllers.length > 1
+                              ? () => _removeSeries(index)
+                              : null,
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
